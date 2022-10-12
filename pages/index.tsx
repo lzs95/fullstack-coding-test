@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import DynamicText from "../components/DynamicText";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 
 const Home = () => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
