@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import DynamicText from "../components/DynamicText";
-import { Input, Box, Center, Container, extendTheme } from "@chakra-ui/react";
+import { Input, Container } from "@chakra-ui/react";
 import React, { useRef } from "react";
 const Home = () => {
   const textRef = useRef(null);
@@ -19,9 +19,7 @@ const Home = () => {
       <Container
         bgGradient={["linear(to-b, blue.200, teal.500)", "linear(to-t, orange.100, purple.300)"]}
         width={{ base: "100%", sm: "80%", md: "60%" }}
-        borderWidth="1px"
         borderRadius="lg"
-        overflow="hidden"
         p="6"
         boxShadow="md">
         <main className={styles.main}>

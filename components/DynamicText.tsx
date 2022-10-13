@@ -12,7 +12,7 @@ const DynamicText = forwardRef((props, ref) => {
   }));
 
   return (
-    <Text as={"span"} fontSize="50px" color="black" mb={3} maxWidth="100%">
+    <Text fontSize="50px" color="black" mb={3} maxWidth="100%">
       <p>{value}</p>
     </Text>
   );
