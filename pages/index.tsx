@@ -1,10 +1,9 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import DynamicText from "../components/DynamicText";
-import { Button, ButtonGroup } from "@chakra-ui/react";
-
+import { Input } from "@chakra-ui/react";
 const Home = () => {
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e) => {
     console.log(e.target.value);
   };
 
@@ -14,10 +13,9 @@ const Home = () => {
         <title>Coding Test</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main className={styles.main}>
         <DynamicText />
-        <input onChange={onChange} />
+        <Input variant="flushed" placeholder="random word" width="auto" onChange={onChange} />
       </main>
     </div>
   );
