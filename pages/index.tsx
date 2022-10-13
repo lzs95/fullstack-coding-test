@@ -2,9 +2,12 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import DynamicText from "../components/DynamicText";
 import { Input } from "@chakra-ui/react";
+import React, { useRef } from "react";
 const Home = () => {
-  const onChange = (e) => {
-    console.log(e.target.value);
+  const textRef = useRef(null);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    textRef.current?.changeValue(e.target.value);
   };
 
   return (
@@ -14,7 +17,7 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <DynamicText />
+        <DynamicText ref={textRef} />
         <Input variant="flushed" placeholder="random word" width="auto" onChange={onChange} />
       </main>
     </div>
