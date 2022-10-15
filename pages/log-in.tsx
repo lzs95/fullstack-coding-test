@@ -41,13 +41,15 @@ const LogIn = () => {
 
   async function handleLogin(e) {
     e.preventDefault();
+    setLoading(true);
 
+    console.log(login);
     try {
-      setLoading(true);
-      alert("Yes");
       await login(data.email, data.password);
-    } catch {
-      alert(errorMessage);
+      console.log(currentUser);
+      console.log("Yes");
+    } catch (err) {
+      console.log(err);
     }
 
     setLoading(false);

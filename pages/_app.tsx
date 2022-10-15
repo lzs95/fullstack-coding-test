@@ -1,12 +1,16 @@
+import React from "react";
 import "../styles/globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
-import LogIn from "./log-in";
+import AuthContextProvider from "../context/AuthContext";
+import "../config/firebase";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <AuthContextProvider>
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </AuthContextProvider>
   );
 }
 

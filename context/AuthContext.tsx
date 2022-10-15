@@ -5,11 +5,12 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 interface Data {
   currentUser: object | null;
-  login: boolean;
+  login: unknown;
   signup: unknown;
   logout: unknown;
 }
@@ -19,12 +20,13 @@ const AuthContext = createContext<Data | any>({});
 export function useAuth() {
   return useContext(AuthContext);
 }
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
+
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   const signup = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password);
@@ -39,7 +41,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    console.log("USER", currentUser);
     auth.onAuthStateChanged((user) => {
       if (user) {
         return setCurrentUser({
@@ -58,4 +59,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       {!loading && children}
     </AuthContext.Provider>
   );
-}
+};
+
+export default AuthContextProvider;
