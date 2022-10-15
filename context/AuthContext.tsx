@@ -9,19 +9,19 @@ import {
 
 interface Data {
   currentUser: object | null;
-  login: unknown;
+  login: boolean;
   signup: unknown;
   logout: unknown;
 }
 
 const AuthContext = createContext<Data | any>({});
+
 export function useAuth() {
   return useContext(AuthContext);
 }
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
@@ -39,6 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
+    console.log("USER", currentUser);
     auth.onAuthStateChanged((user) => {
       if (user) {
         return setCurrentUser({

@@ -14,7 +14,7 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { OAuthButtonGroup } from "../components/OAuthButtonGroup ";
 import { PasswordField } from "../components/PasswordField";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -25,20 +25,33 @@ const LogIn = () => {
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
   const { currentUser, login } = useAuth();
-  const [errorMessage, setErrorMessage] = useState("no");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("no");
   const [data, setData] = useState({
     email: "",
     password: "",
   });
 
-  const signInWithGoogle = async (e: any) => {
-    e.preventDefault();
-    await signInWithPopup(auth, provider);
-    //   if (!currentUser || !currentUser.email) {
-    //     console.log(errorMessage);
-    //     return;
-    //   }
+  const getPassword = (e) => {
+    setData({
+      ...data,
+      password: e.target.value,
+    });
   };
+
+  async function handleLogin(e) {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      alert("Yes");
+      await login(data.email, data.password);
+    } catch {
+      alert(errorMessage);
+    }
+
+    setLoading(false);
+  }
 
   return (
     <Container maxW="lg" py={{ base: "12", md: "24" }} px={{ base: "0", sm: "8" }}>
@@ -64,9 +77,19 @@ const LogIn = () => {
             <Stack spacing="5">
               <FormControl>
                 <FormLabel htmlFor="email">Email</FormLabel>
-                <Input id="email" type="email" />
+                <Input
+                  id="email"
+                  type="email"
+                  required
+                  onChange={(e: any) =>
+                    setData({
+                      ...data,
+                      email: e.target.value,
+                    })
+                  }
+                />
               </FormControl>
-              <PasswordField />
+              <PasswordField onChange={getPassword} />
             </Stack>
             <HStack justify="space-between">
               <Checkbox defaultChecked>Remember me</Checkbox>
@@ -75,7 +98,9 @@ const LogIn = () => {
               </Button>
             </HStack>
             <Stack spacing="6">
-              <Button variant="primary">Sign in</Button>
+              <Button variant="primary" onClick={(e) => handleLogin(e)} disabled={loading}>
+                Sign in
+              </Button>
               <HStack>
                 <Divider />
                 <Text fontSize="sm" whiteSpace="nowrap" color="muted">
