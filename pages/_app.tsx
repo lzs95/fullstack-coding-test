@@ -5,7 +5,6 @@ import LogIn from "./log-in";
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
-      <LogIn />
       <Component {...pageProps} />
     </ChakraProvider>
   );
