@@ -23,22 +23,27 @@ import { useAuth } from "../context/AuthContext";
 import { GoogleIcon } from "components/ProviderIcons";
 import { auth } from "config/firebase";
 
+interface inputData {
+  email: string;
+  _password: string;
+}
+
 const LogIn = () => {
   const router = useRouter();
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
   const { currentUser, login } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("no");
-  const [data, setData] = useState({
+  const [errorMessage, setErrorMessage] = useState<string>("Unable to log-in");
+  const [data, setData] = useState<inputData>({
     email: "",
-    password: "",
+    _password: "",
   });
 
   const getPassword = (e) => {
     setData({
       ...data,
-      password: e.target.value,
+      _password: e.target.value,
     });
   };
 
@@ -47,7 +52,7 @@ const LogIn = () => {
     setLoading(true);
 
     try {
-      await login(data.email, data.password);
+      await login(data.email, data._password);
     } catch (err) {
       console.log(err);
     }
@@ -89,7 +94,6 @@ const LogIn = () => {
               <FormControl>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
-                  id="email"
                   type="email"
                   required
                   onChange={(e: any) =>
