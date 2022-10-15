@@ -16,12 +16,17 @@ export const PasswordField = React.forwardRef<HTMLInputElement, InputProps>((pro
   const { isOpen, onToggle } = useDisclosure();
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  const mergeRef = useMergeRefs(inputRef, ref);
   const onClickReveal = () => {
     onToggle();
+    console.log(props.onChange);
     if (inputRef.current) {
       inputRef.current.focus({ preventScroll: true });
     }
+  };
+
+  const handlePassword = (e) => {
+    e.preventDefault;
+    props.onChange(e);
   };
 
   return (
@@ -38,12 +43,14 @@ export const PasswordField = React.forwardRef<HTMLInputElement, InputProps>((pro
         </InputRightElement>
         <Input
           id="password"
-          ref={mergeRef}
           name="password"
           type={isOpen ? "text" : "password"}
           autoComplete="current-password"
           required
           {...props}
+          onChange={(e) => {
+            handlePassword(e);
+          }}
         />
       </InputGroup>
     </FormControl>

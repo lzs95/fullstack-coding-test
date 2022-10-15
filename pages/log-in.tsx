@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   Checkbox,
   Container,
   Divider,
@@ -15,11 +16,11 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { OAuthButtonGroup } from "../components/OAuthButtonGroup ";
 import { PasswordField } from "../components/PasswordField";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../config/firebase";
 import { useAuth } from "../context/AuthContext";
+import { GoogleIcon } from "components/ProviderIcons";
+import { auth } from "config/firebase";
 
 const LogIn = () => {
   const provider = new GoogleAuthProvider();
@@ -43,17 +44,23 @@ const LogIn = () => {
     e.preventDefault();
     setLoading(true);
 
-    console.log(login);
     try {
       await login(data.email, data.password);
-      console.log(currentUser);
-      console.log("Yes");
     } catch (err) {
       console.log(err);
     }
 
     setLoading(false);
   }
+
+  const signInWithGoogle = async (e: any) => {
+    e.preventDefault();
+    await signInWithPopup(auth, provider);
+    if (!currentUser || !currentUser.email) {
+      setErrorMessage("Error");
+      return;
+    }
+  };
 
   return (
     <Container maxW="lg" py={{ base: "12", md: "24" }} px={{ base: "0", sm: "8" }}>
@@ -100,7 +107,7 @@ const LogIn = () => {
               </Button>
             </HStack>
             <Stack spacing="6">
-              <Button variant="primary" onClick={(e) => handleLogin(e)} disabled={loading}>
+              <Button variant="outline" onClick={(e) => handleLogin(e)} disabled={loading}>
                 Sign in
               </Button>
               <HStack>
@@ -110,7 +117,11 @@ const LogIn = () => {
                 </Text>
                 <Divider />
               </HStack>
-              <OAuthButtonGroup />
+              <Stack spacing="6">
+                <Button variant="outline" onClick={signInWithGoogle}>
+                  <GoogleIcon boxSize="6" />
+                </Button>
+              </Stack>
             </Stack>
           </Stack>
         </Box>

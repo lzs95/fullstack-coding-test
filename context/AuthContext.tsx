@@ -24,9 +24,10 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
-
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  console.log(currentUser);
 
   const signup = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password);
@@ -41,17 +42,17 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
+    auth.onAuthStateChanged((currentUser) => {
+      if (currentUser) {
         return setCurrentUser({
-          uid: user.uid,
-          email: user.email,
+          uid: currentUser.uid,
+          email: currentUser.email,
         });
       } else {
         setCurrentUser(null);
       }
-      setLoading(false);
     });
+    setLoading(false);
   }, []);
 
   return (
