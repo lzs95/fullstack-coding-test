@@ -16,6 +16,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { PasswordField } from "../components/PasswordField";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useAuth } from "../context/AuthContext";
@@ -23,6 +24,7 @@ import { GoogleIcon } from "components/ProviderIcons";
 import { auth } from "config/firebase";
 
 const LogIn = () => {
+  const router = useRouter();
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
   const { currentUser, login } = useAuth();
@@ -57,7 +59,7 @@ const LogIn = () => {
     e.preventDefault();
     await signInWithPopup(auth, provider);
     if (!currentUser || !currentUser.email) {
-      setErrorMessage("Error");
+      alert("error: unable to log-in");
       return;
     }
   };
@@ -70,7 +72,7 @@ const LogIn = () => {
             <Heading size={useBreakpointValue({ base: "xs", md: "sm" })}>Log in to your account</Heading>
             <HStack spacing="1" justify="center">
               <Text color="muted">Don't have an account?</Text>
-              <Button variant="link" colorScheme="blue">
+              <Button variant="link" colorScheme="blue" onClick={() => router.push("/sign-up")}>
                 Sign up
               </Button>
             </HStack>
@@ -107,8 +109,13 @@ const LogIn = () => {
               </Button>
             </HStack>
             <Stack spacing="6">
-              <Button variant="outline" onClick={(e) => handleLogin(e)} disabled={loading}>
-                Sign in
+              <Button
+                variant="outline"
+                loadingText="Please Wait"
+                size="lg"
+                onClick={(e) => handleLogin(e)}
+                disabled={loading}>
+                Log in
               </Button>
               <HStack>
                 <Divider />
