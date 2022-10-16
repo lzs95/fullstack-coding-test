@@ -40,7 +40,6 @@ export default function SignupCard() {
     } catch (err) {
       console.log(err);
     }
-    console.log(data);
   };
 
   return (
