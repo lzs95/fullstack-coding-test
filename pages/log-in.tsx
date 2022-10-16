@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   Checkbox,
   Container,
   Divider,
@@ -34,7 +33,6 @@ const LogIn = () => {
   provider.setCustomParameters({ prompt: "select_account" });
   const { currentUser, login } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("Unable to log-in");
   const [data, setData] = useState<inputData>({
     email: "",
     _password: "",
@@ -53,6 +51,7 @@ const LogIn = () => {
 
     try {
       await login(data.email, data._password);
+      router.push("/blog");
     } catch (err) {
       console.log(err);
     }
