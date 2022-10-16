@@ -35,7 +35,8 @@ export default function SignupCard() {
 
     try {
       await signup(data.email, data._password);
-      router.push("./blog");
+      alert("Success");
+      router.push("./log-in");
     } catch (err) {
       console.log(err);
     }
