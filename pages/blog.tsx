@@ -4,11 +4,12 @@ import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { BlogModal } from "components/BlogModal";
+import router from "next/router";
+import { useAuth } from "context/AuthContext";
 
 export default function blogPostWithImage() {
-  // Init db service
   const db = getFirestore();
-  // Collection Ref
+  const { currentUser } = useAuth();
   const collectRef = collection(db, `blog-post`);
   const [blogPost, setblogPost] = useState([]);
   const [toggle, setToggle] = useState(false);
@@ -33,8 +34,14 @@ export default function blogPostWithImage() {
     });
     setToggle(true);
   };
+
   useEffect(() => {
-    getAllData();
+    if (!currentUser) {
+      router.push("/log-in");
+      alert("Unverified User");
+    } else {
+      getAllData();
+    }
   }, []);
 
   return (

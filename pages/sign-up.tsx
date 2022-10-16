@@ -4,13 +4,11 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  InputRightElement,
   Stack,
   Button,
   Heading,
   Text,
   useColorModeValue,
-  Link,
   Container,
   useBreakpointValue,
 } from "@chakra-ui/react";
@@ -37,6 +35,7 @@ export default function SignupCard() {
 
     try {
       await signup(data.email, data._password);
+      router.push("./blog");
     } catch (err) {
       console.log(err);
     }

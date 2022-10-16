@@ -18,7 +18,6 @@ export const PasswordField = React.forwardRef<HTMLInputElement, InputProps>((pro
 
   const onClickReveal = () => {
     onToggle();
-    console.log(props.onChange);
     if (inputRef.current) {
       inputRef.current.focus({ preventScroll: true });
     }

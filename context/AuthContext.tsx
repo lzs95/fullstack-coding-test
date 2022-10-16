@@ -27,7 +27,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  console.log(currentUser);
+  console.log("CurrentUser", currentUser);
 
   const signup = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password);
@@ -51,8 +51,8 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
       } else {
         setCurrentUser(null);
       }
+      setLoading(false);
     });
-    setLoading(false);
   }, []);
 
   return (

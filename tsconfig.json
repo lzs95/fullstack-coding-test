@@ -16,6 +16,7 @@
     "baseUrl": "./",
     "noImplicitAny": false
   },
+  "components": ["./components/DynamicText.tsx"],
   "exclude": ["node_modules"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.tsx", "pages/_document.js"]
 }
