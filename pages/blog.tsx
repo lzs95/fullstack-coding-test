@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { Box, Center, Heading, Text, Stack, Avatar, useColorModeValue, Grid, GridItem } from "@chakra-ui/react";
-import { getFirestore, collection, getDocs, onSnapshot } from "firebase/firestore";
+import { Box, Center, Heading, Text, Stack, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
+import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
+import { BlogModal } from "components/BlogModal";
 
 export default function blogPostWithImage() {
   // Init db service
@@ -10,6 +11,8 @@ export default function blogPostWithImage() {
   // Collection Ref
   const collectRef = collection(db, `blog-post`);
   const [blogPost, setblogPost] = useState([]);
+  const [toggle, setToggle] = useState(false);
+  const [modalContent, setModalContent] = useState({ content: "", image: "", title: "" });
 
   // Get collection data: returns a promise
   const getAllData = () => {
@@ -22,12 +25,28 @@ export default function blogPostWithImage() {
     });
   };
 
+  const openModal = (blogContent, blogIimage, blogTitle) => {
+    setModalContent({
+      content: blogContent,
+      image: blogIimage,
+      title: blogTitle,
+    });
+    setToggle(true);
+  };
   useEffect(() => {
     getAllData();
   }, []);
 
   return (
     <>
+      <BlogModal
+        content={modalContent.content}
+        picture={modalContent.image}
+        title={modalContent.title}
+        toggle={toggle}
+        setToggle={setToggle}
+      />
+
       <Navbar />
       <Center py={6}>
         <Grid templateColumns="repeat(5, 1fr)" gap={6}>
@@ -35,12 +54,18 @@ export default function blogPostWithImage() {
             return (
               <GridItem
                 key={post["id"]}
+                transition="all 0.2s"
+                _hover={{
+                  transform: "translateY(-4px)",
+                  boxShadow: "md",
+                }}
                 gap={10}
                 maxW={"445px"}
-                boxShadow={"2xl"}
+                boxShadow={"lg"}
                 rounded={"md"}
                 p={6}
-                overflow={"hidden"}>
+                overflow={"hidden"}
+                onClick={() => openModal(post["blog-content"], post["blog-image"], post["blog-title"])}>
                 <Box h={"210px"} bg={"gray.100"} mt={-6} mx={-6} mb={6} pos={"relative"}>
                   <Image layout={"fill"} src={post["blog-image"]} />
                 </Box>
