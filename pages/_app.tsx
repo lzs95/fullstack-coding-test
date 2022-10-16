@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import AuthContextProvider from "../context/AuthContext";
+import PrivateRoutes from "components/PrivateRoutes";
 import "../config/firebase";
 
 function MyApp({ Component, pageProps }) {
