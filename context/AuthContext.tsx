@@ -5,7 +5,6 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
 } from "firebase/auth";
 
 interface Data {
@@ -27,10 +26,11 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  console.log("CurrentUser", currentUser);
+  //Check for current user
+  // console.log("CurrentUser", currentUser);
 
-  const signup = (email: string, password: string) => {
-    createUserWithEmailAndPassword(auth, email, password);
+  const signup = async (email: string, password: string) => {
+    await createUserWithEmailAndPassword(auth, email, password);
   };
 
   const login = async (email: string, password: string) => {

@@ -53,7 +53,7 @@ const LogIn = () => {
       await login(data.email, data._password);
       router.push("/blog");
     } catch (err) {
-      console.log(err);
+      alert(err.message);
     }
 
     setLoading(false);

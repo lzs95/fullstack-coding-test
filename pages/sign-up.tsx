@@ -35,10 +35,10 @@ export default function SignupCard() {
 
     try {
       await signup(data.email, data._password);
-      alert("Success");
+      alert("Success now you can log in");
       router.push("./log-in");
     } catch (err) {
-      console.log(err);
+      alert(err.message);
     }
   };
 
