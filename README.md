@@ -1,6 +1,6 @@
 ## Run Locally
 
-note: You will need to add your own firebase api keys to the env.(delete this -> template) file:
+note: Add your own firebase api keys to an env. file:
 
 Install dependencies
 
