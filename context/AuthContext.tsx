@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 interface Data {
@@ -42,17 +43,19 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    auth.onAuthStateChanged((currentUser) => {
-      if (currentUser) {
-        return setCurrentUser({
-          uid: currentUser.uid,
-          email: currentUser.email,
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser({
+          uid: user.uid,
+          email: user.email,
         });
       } else {
         setCurrentUser(null);
       }
+      setLoading(false);
     });
-    setLoading(false);
+
+    unsubscribe();
   }, []);
 
   return (
