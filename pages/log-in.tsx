@@ -61,10 +61,11 @@ const LogIn = () => {
 
   const signInWithGoogle = async (e: any) => {
     e.preventDefault();
-    await signInWithPopup(auth, provider);
-    if (!currentUser || !currentUser.email) {
-      alert("error: unable to log-in");
-      return;
+    try {
+      await signInWithPopup(auth, provider);
+      router.push("/blog");
+    } catch (err) {
+      alert(err);
     }
   };
 

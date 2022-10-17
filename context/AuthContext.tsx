@@ -51,8 +51,8 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
       } else {
         setCurrentUser(null);
       }
-      setLoading(false);
     });
+    setLoading(false);
   }, []);
 
   return (
