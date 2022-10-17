@@ -1,3 +1,20 @@
+## Run Locally
+
+note: You will need to add your own firebase api keys to the env.(delete this -> template) file:
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the App
+
+```bash
+  npm run dev
+```
+
+
 # Coding Tests
 
 - Fullstack Developer - Do Test 1, 2 and 3
