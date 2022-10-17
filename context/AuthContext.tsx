@@ -55,7 +55,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false);
     });
 
-    unsubscribe();
+    return () => unsubscribe();
   }, []);
 
   return (
