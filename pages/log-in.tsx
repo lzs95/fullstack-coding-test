@@ -59,10 +59,9 @@ const LogIn = () => {
     setLoading(false);
   }
 
-  const signInWithGoogle = async (e: any) => {
-    e.preventDefault();
+  const signInWithGoogle = () => {
     try {
-      await signInWithPopup(auth, provider);
+      signInWithPopup(auth, provider);
       router.push("/blog");
     } catch (err) {
       alert(err);
